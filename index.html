@@ -1,0 +1,130 @@
+<html ng-app="reddit">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.js" charset="utf-8"></script>
+  <!-- <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script> -->
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" media="screen" title="no title" charset="utf-8">
+  <link rel="stylesheet" href="/style.css" media="screen" title="no title" charset="utf-8">
+  <title>{{greeting}} World</title>
+</head>
+<body ng-cloak ng-controller='redditController' ng-app="ngAnimate">
+<header class='navbar'>
+  <h1 class='newFont'>Fantasy Football LINEUP</h1><h3  class='newFont' type='button'ng-click='togglePost()'>+ Submit Post</h3><h3><input ng-model='search'id='search' type="text" name="name" value="" placeholder="Search"></h3>
+
+      Sort By: <select class='drop_down' ng-model="selectedName" name='asdfa' >
+      <option value="votes">Votes</option>
+      <option value="date">Dates</option>
+      <option value="title">Title</option>
+    </select>
+
+</header>
+<div class="container">
+<!-- <div class="wrapper"> -->
+<!-- new form -->
+
+
+<!-- <div ng-hide="myCheck"> -->
+<div class="form-wrapper" ng-show='postage'>
+  <form name='submitNewPost' ng-submit='submitNewPost.$valid && addPlayer()' novalidate>
+    <div class="form-group">
+
+      <!-- <input class="form-control" type="text" name="name" value="title" placeholder="Player Name" ng-model='post.title' ng-class="{ 'form-error': submitNewPost.name.$invalid && !submitNewPost.name.$pristine, 'has-success': submitNewPost.name.$valid}" required> -->
+      <input class="form-control" type="text" name="name" value="title" placeholder="Player Name" ng-model='post.title' ng-class="{ 'form-error': submitNewPost.name.$invalid && !submitNewPost.name.$pristine, 'form-success': submitNewPost.name.$valid}" required>
+      <p ng-show="submitNewPost.name.$invalid && !submitNewPost.name.$pristine" class="help-block">Your player name is required.</p>
+    </div>
+    <div class="form-group">
+
+      <input class="form-control" type="text" name='coach' value="coach" placeholder="Coach" ng-model='post.coach' ng-class="{ 'form-error': submitNewPost.coach.$invalid && !submitNewPost.coach.$pristine, 'form-success': submitNewPost.coach.$valid}" required>
+    <p ng-show="submitNewPost.coach.$invalid && !submitNewPost.coach.$pristine" class="help-block">Your coaches name is required.</p>
+    </div>
+    <div class="form-group">
+
+      <input class="form-control" type="text" name='image' value="image" placeholder="Image URL" ng-model='post.image' ng-class="{ 'form-error': submitNewPost.image.$invalid && !submitNewPost.image.$pristine, 'form-success': submitNewPost.image.$valid}" require>
+    </div>
+    <div class="form-group">
+
+      <textarea class="form-control" rows="4" name='description' cols="50" type="text" value="description" placeholder="Description" ng-model='post.description' ng-model='post.image' ng-class="{ 'form-error': submitNewPost.description.$invalid && !submitNewPost.description.$pristine, 'form-success': submitNewPost.description.$valid}" required></textarea>
+      <p ng-show="submitNewPost.description.$invalid && !submitNewPost.description.$pristine" class="help-block">Your description is required.</p>
+    </div>
+  <input type="submit" value="submit">
+
+  </form>
+</div>
+<!-- </div> -->
+
+
+
+<!-- end new form -->
+
+<!-- post headings -->
+
+<div  ng-repeat="post in arrays | filter:search | orderBy:selectedName:true">
+
+  <div class="row">
+    <div class="col-xs-2 col-md-2 col-lg-2">
+      <img class='thumb_pics' ng-src="{{post.image}}" alt="" />
+    </div>
+    <div class="col-xs-10 col-md-10 col-lg-10">
+      <h4>{{post.title}} |
+        <i ng-click='up(post)' class="fa fa-arrow-up" aria-hidden="true"></i>
+        <i ng-click='down(post)' class="fa fa-arrow-down" aria-hidden="true"></i>
+
+        <p class='votes' ng-class="{'number-error' : post.votes < 0}">{{post.votes}}</p>
+      </h4>
+      <div class="coach_left">
+        <h4>Coach: {{post.coach}}</h4>
+      </div>
+      <div class="body_text">
+        <h5>{{post.description}}</h5>
+      </div>
+      <div class="">
+      <h5>{{post.date}} |
+           <i ng-click='toggleComments()' class="fa fa-comments" aria-hidden="true">
+           </i> <span> {{post.comments.length}}
+             <ng-pluralize count="post.comments.length" when="{'0': 'no comments',
+                     '1': 'comment',
+                     '2': 'comments',
+                     'other': 'comments'}">
+             </ng-pluralize>
+
+           </span> | <span ng-click='togglePostComments()'> Add Comment</span>
+      </h5>
+      <div class="form-wrapper">
+        <form ng-submit='addComments.$valid && addComment(post)' name='addComments' ng-show='postComments' novalidate>
+          <input type="text" name="author" value="author" placeholder="User Name" ng-model='comment_form.author' ng-class="{ 'form-error': addComments.author.$invalid && !addComments.author.$pristine, 'form-success': addComments.author.$valid}" required>
+          <p ng-show="addComments.author.$invalid && !addComments.author.$pristine" class="help-block">Your user name is required.</p>
+          <input type="text" name="text" value="text" placeholder="Comments" ng-model='comment_form.text' ng-class="{ 'form-error': addComments.text.$invalid && !addComments.text.$pristine, 'form-success': addComments.text.$valid}" required>
+          <p ng-show="addComments.text.$invalid && !addComments.text.$pristine" class="help-block">Your comments are required.</p>
+          <input type="submit" value="submit">
+      </form>
+    </div>
+      </div>
+      <div class="comments" ng-repeat='comment in post.comments'>
+        <strong><h5 class="form-control" ng-show='comments'>User: {{comment.author}}</h5></strong>
+        <h5 class="form-control" ng-show='comments'>Comment: {{comment.text}}</h5>
+      </div>
+
+    </div>
+  </div>
+</div>
+</div>
+
+
+
+
+
+<!-- end post headings -->
+<footer></footer>
+</body>
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<link rel="stylesheet" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></link>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>
+
+
+<script src="app.js" charset="utf-8"></script>
+<script src="main.js" charset="utf-8"></script>
+</html>

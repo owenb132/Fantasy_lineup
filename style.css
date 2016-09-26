@@ -1,0 +1,123 @@
+@import 'https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz';
+/*font-family: 'Yanone Kaffeesatz', sans-serif;*/
+*{
+  padding: 0;
+  margin: 0;
+}
+header{
+  height: 7vh;
+  width: 100%;
+  border: 1px solid black;
+}
+footer{
+  height: 7vh;
+  width: 100%;
+
+}
+.wrapper{
+  height: 86vh;
+  width: 100%;
+}
+body{
+  background-color: #BE713E;
+}
+.newFont{
+  font-family: 'Yanone Kaffeesatz', sans-serif;
+  color: white;
+}
+.form-group p{
+  font-family: 'Yanone Kaffeesatz', sans-serif;
+}
+
+/******************DropDown*****************/
+.drop_down{
+  height: 5vh;
+  width: 10vw;
+  display: inline;
+  border:0px;
+  outline:0px;
+
+  -webkit-appearance: button;
+ -webkit-border-radius: 2px;
+ -webkit-box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+ -webkit-padding-end: 20px;
+ -webkit-padding-start: 2px;
+ -webkit-user-select: none;
+ background-image: url(../images/select-arrow.png),
+   -webkit-linear-gradient(#FAFAFA, #F4F4F4 40%, #E5E5E5);
+ background-position: center right;
+ background-repeat: no-repeat;
+ border: 1px solid #AAA;
+ color: #555;
+ font-size: inherit;
+ margin: 0;
+ overflow: hidden;
+ padding-top: 2px;
+ padding-bottom: 2px;
+ text-overflow: ellipsis;
+ white-space: nowrap;
+}
+
+/******************END OF DropDown*****************/
+
+header h1{
+  display: inline-block;
+  padding-right: 5%;
+}
+header h3{
+  display: inline-block;
+  padding-right: 2%;
+}
+#search{
+  border: 1px solid black;
+  font-size: 100%;
+  text-align: justify;
+  height: 5vh;
+  width: 15vw;
+  padding-left: 6%;
+}
+.thumb_pics{
+  height: auto;
+  max-width: 108%;
+}
+.row{
+  /*border: 1px solid green;*/
+}
+.col-xs-2{
+  background-color: #F8F6F8;
+  padding-bottom: 0.5%;
+  /*border: 1px solid blue;*/
+}
+.col-xs-10{
+  /*clear: left;*/
+  background-color: #F8F6F8;
+  /*border: 1px solid red;*/
+}
+.coach_left{
+  text-align: right;
+
+}
+.votes{
+  color: lime;
+  display: inline;
+}
+.comments{
+  background-color: white;
+  border: 1px solid black;
+}
+
+.form-error {
+  border: 2px solid red;
+}
+
+.form-success {
+  border: 2px solid green;
+}
+.number-error{
+  color: darkred;
+}
+/*****************************/
+
+/*img {
+  width: 100%;
+}*/
